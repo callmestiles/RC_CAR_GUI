@@ -1,0 +1,70 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-4dcc4e4698176b4e05e4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "RC_CAR_QUI",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "appRC_CAR_QUI::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appRC_CAR_QUI-7d7e0a3de1c511eb8a4e.json",
+					"name" : "appRC_CAR_QUI",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "appRC_CAR_QUI_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-appRC_CAR_QUI_autogen-c5715576f14eb4a762bf.json",
+					"name" : "appRC_CAR_QUI_autogen",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/the-watchers/Desktop/RC_CAR_QUI/build",
+		"source" : "/home/the-watchers/Desktop/RC_CAR_QUI"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

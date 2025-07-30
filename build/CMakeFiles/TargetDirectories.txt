@@ -1,0 +1,8 @@
+/home/the-watchers/Desktop/RC_CAR_QUI/build/CMakeFiles/appRC_CAR_QUI.dir
+/home/the-watchers/Desktop/RC_CAR_QUI/build/CMakeFiles/edit_cache.dir
+/home/the-watchers/Desktop/RC_CAR_QUI/build/CMakeFiles/rebuild_cache.dir
+/home/the-watchers/Desktop/RC_CAR_QUI/build/CMakeFiles/list_install_components.dir
+/home/the-watchers/Desktop/RC_CAR_QUI/build/CMakeFiles/install.dir
+/home/the-watchers/Desktop/RC_CAR_QUI/build/CMakeFiles/install/local.dir
+/home/the-watchers/Desktop/RC_CAR_QUI/build/CMakeFiles/install/strip.dir
+/home/the-watchers/Desktop/RC_CAR_QUI/build/CMakeFiles/appRC_CAR_QUI_autogen.dir
