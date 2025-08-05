@@ -13,7 +13,6 @@ CarController::CarController(QObject *parent)
     // Connect network manager signals
     connect(m_networkManager, &QNetworkAccessManager::finished,
             this, &CarController::onRequestFinished);
-
     // Setup back and forth timer
     m_backAndForthTimer->setInterval(1000); // 1 second intervals
     connect(m_backAndForthTimer, &QTimer::timeout,
@@ -27,6 +26,15 @@ void CarController::setSpeed(int speed)
     if (m_speed != speed) {
         m_speed = speed;
         emit speedChanged();
+
+        // Resend the last command with the new speed
+        // Only if we're not stopped and not in back-and-forth mode
+        if (m_currentDirection != "stop" && !m_backAndForthTimer->isActive()) {
+            qDebug() << "Speed changed, resending command:" << m_currentDirection << "with new speed:" << m_speed;
+            sendControlRequest(m_currentDirection, m_speed);
+        }
+        // If back-and-forth is active, the new speed will automatically be used
+        // in the next timer cycle, so no immediate action needed
     }
 }
 
@@ -90,19 +98,16 @@ void CarController::onBackAndForthTimer()
     m_backAndForthForward = !m_backAndForthForward;
 }
 
-// Update sendControlRequest method signature and implementation:
 void CarController::sendControlRequest(const QString& direction, int speed)
 {
     QJsonObject jsonData;
     jsonData["direction"] = direction;
     jsonData["speed"] = speed;
-
     QJsonDocument doc(jsonData);
     QByteArray data = doc.toJson();
 
     QNetworkRequest request{QUrl(m_carUrl)};
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
     QNetworkReply* reply = m_networkManager->post(request, data);
 
     m_currentDirection = direction;
@@ -115,8 +120,7 @@ void CarController::sendControlRequest(const QString& direction, int speed)
 void CarController::onRequestFinished(QNetworkReply* reply)
 {
     // Check if request was successful
-
-    qDebug()<<reply->error();
+    qDebug() << reply->error();
     if (reply->error() == QNetworkReply::NoError) {
         qDebug() << "Request successful";
         m_isConnected = true;
