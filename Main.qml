@@ -20,10 +20,55 @@ ApplicationWindow{
     }
 
     StackView {
-        id: stackView
-        anchors.fill: parent
-        initialItem: camera
-    }
+            id: stackView
+            anchors.fill: parent
+            initialItem: camera
+
+            // Add key handling directly to StackView
+            focus: true
+            Keys.onPressed: (event) => {
+                console.log("Key pressed:", event.text.toLowerCase())
+                switch(event.text.toLowerCase()) {
+                    case 'w':
+                        carController.moveForward()
+                        event.accepted = true
+                        break
+                    case 'a':
+                        carController.turnLeft()
+                        event.accepted = true
+                        break
+                    case 's':
+                        carController.moveBackward()
+                        event.accepted = true
+                        break
+                    case 'd':
+                        carController.turnRight()
+                        event.accepted = true
+                        break
+                    case 'q':
+                        carController.stopCar()
+                        event.accepted = true
+                        break
+                }
+            }
+
+            // Force focus when component loads
+            Component.onCompleted: {
+                forceActiveFocus()
+            }
+
+            // Re-focus when page changes
+            onCurrentItemChanged: {
+                forceActiveFocus()
+            }
+        }
+
+            // Make sure it gets focus when clicked
+            MouseArea {
+                anchors.fill: parent
+                onClicked: stackView.forceActiveFocus()
+                z: -1 // Behind other content
+            }
 
     Component {
         id: camera
