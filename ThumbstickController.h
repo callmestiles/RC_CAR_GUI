@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QObject>
-#include <QSerialPort>
-#include <QSerialPortInfo>
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
 #include <QTimer>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -10,6 +10,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QDebug>
+#include <QRegularExpression> // Explicitly include this for Qt6
 
 class ThumbstickController : public QObject
 {
@@ -64,6 +65,7 @@ public slots:
     void disconnectSerial();
     QStringList getAvailableSerialPorts();
     void sendGripperCommand(const QString& command);
+    void sendDumperCommand(const QString& command);
 
 signals:
     void connectionChanged();

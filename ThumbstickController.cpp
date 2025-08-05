@@ -2,33 +2,35 @@
 
 ThumbstickController::ThumbstickController(QObject *parent)
     : QObject(parent)
-       , m_serialPort(new QSerialPort(this))
-       , m_serialPortName("/dev/serial0")
-       , m_isConnected(false)
-       , m_thumbstickEnabled(false)
-       , m_networkManager(new QNetworkAccessManager(this))
-       , m_carUrl("http://192.168.4.1") // Base URL without endpoint
-       , m_armRawX(512)
-       , m_armRawY(512)
-       , m_armCommand("stop")
-       , m_motorRawX(512)
-       , m_motorRawY(512)
-       , m_motorDirection("stop")
-       , m_motorSpeed(0)
-       , m_lastArmCommand("stop")
-       , m_lastMotorDirection("stop")
-       , m_lastMotorSpeed(0)
-       , m_lastButtonState("OPEN")
-       , m_buttonState("OPEN")
-       , m_centerX(512)
-       , m_centerY(512)
-       , m_deadzone(100)
-       , m_significantSpeedChange(20) // Only send HTTP request if speed changes by 20 or more
+    , m_serialPort(new QSerialPort(this))
+    , m_serialPortName("/dev/serial0")
+    , m_isConnected(false)
+    , m_thumbstickEnabled(false)
+    , m_networkManager(new QNetworkAccessManager(this))
+    , m_carUrl("http://192.168.4.1") // Base URL without endpoint
+    , m_armRawX(512)
+    , m_armRawY(512)
+    , m_armCommand("stop")
+    , m_motorRawX(512)
+    , m_motorRawY(512)
+    , m_motorDirection("stop")
+    , m_motorSpeed(0)
+    , m_lastArmCommand("stop")
+    , m_lastMotorDirection("stop")
+    , m_lastMotorSpeed(0)
+    , m_lastButtonState("OPEN")
+    , m_buttonState("OPEN")
+    , m_centerX(512)
+    , m_centerY(512)
+    , m_deadzone(100)
+    , m_significantSpeedChange(20) // Only send HTTP request if speed changes by 20 or more
 {
-    // Setup serial port connections
+    // Setup serial port connections - CHANGED FOR QT6
     connect(m_serialPort, &QSerialPort::readyRead,
             this, &ThumbstickController::onSerialDataReady);
-    connect(m_serialPort, QOverload<QSerialPort::SerialPortError>::of(&QSerialPort::errorOccurred),
+
+    // Qt6 change: errorOccurred signal instead of QOverload syntax
+    connect(m_serialPort, &QSerialPort::errorOccurred,
             this, &ThumbstickController::onSerialError);
 
     // Setup network manager
@@ -122,6 +124,11 @@ void ThumbstickController::disconnectSerial()
     m_isConnected = false;
     emit connectionChanged();
     qDebug() << "Thumbstick serial port disconnected";
+}
+
+void ThumbstickController::sendDumperCommand(const QString& command) {
+    sendHttpRequest("/dumper", command, 0);
+    emit gripperControlReceived("DUMPER_" + command.toUpper());
 }
 
 QStringList ThumbstickController::getAvailableSerialPorts()
