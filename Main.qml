@@ -928,7 +928,7 @@ ApplicationWindow{
                                         text: "Open Gripper"
                                         enabled: thumbstickController.isConnected
                                         background: Rectangle {
-                                            color: parent.pressed ? "lightgrey" : "darkgrey"
+                                            color: parent.pressed ? "#27AE60" : "#2ECC71"
                                             radius: 5
                                             border.width: 1
                                             border.color: "#2980B9"
@@ -942,7 +942,7 @@ ApplicationWindow{
                                         text: "Close Gripper"
                                         enabled: thumbstickController.isConnected
                                         background: Rectangle {
-                                            color: parent.pressed ? "lightgrey" : "darkgrey"
+                                            color: parent.pressed ? "#E74C3C" : "#EC7063"
                                             radius: 5
                                             border.width: 1
                                             border.color: "#E67E22"
@@ -952,6 +952,47 @@ ApplicationWindow{
                                         }
                                     }
                                 }
+
+                                // NEW DUMPER CONTROL SECTION - ADD THIS AFTER THE GRIPPER CONTROL
+                                RowLayout {
+                                    spacing: 10
+
+                                    Text {
+                                        text: "Manual Dumper:"
+                                        color: "white"
+                                        font.pixelSize: 14
+                                        Layout.preferredWidth: 120
+                                    }
+
+                                    Button {
+                                        text: "Open Dumper"
+                                        enabled: thumbstickController.isConnected
+                                        background: Rectangle {
+                                            color: parent.pressed ? "#27AE60" : "#2ECC71"
+                                            radius: 5
+                                            border.width: 1
+                                            border.color: "#1E8449"
+                                        }
+                                        onClicked: {
+                                            thumbstickController.sendDumperCommand("dumperOpen")
+                                        }
+                                    }
+
+                                    Button {
+                                        text: "Close Dumper"
+                                        enabled: thumbstickController.isConnected
+                                        background: Rectangle {
+                                            color: parent.pressed ? "#E74C3C" : "#EC7063"
+                                            radius: 5
+                                            border.width: 1
+                                            border.color: "#C0392B"
+                                        }
+                                        onClicked: {
+                                            thumbstickController.sendDumperCommand("dumperClose")
+                                        }
+                                    }
+                                }
+
                             }
                         }
 
